@@ -7,9 +7,6 @@
 <title>员工管理系统|主页</title>
 </head>
 <body>
-<!-- 导入导航页 -->
-
-
 
 <div layout:fragment="content" class="content">
 	<article>
@@ -22,14 +19,16 @@
 					<th>编号</th><th>姓名</th><th>生日</th><th>部门</th><th>地址</th><th>操作</th>
 				</tr>
 				<tr th:each="employee : ${employees}">
-					<td th:text="${employee.id}">...</td>
-					<td th:text="${employee.name}">...</td>
-					<td th:text="${employee.birthday}">...</td>
-					<td th:text="${employee.department.name}">...</td>
-					<td th:text="${employee.address}">...</td>
+					<td th:text="${employee.id}">1</td>
+					<td th:text="${employee.name}">张三</td>
+					<!-- 日期格式化 -->
+					<td th:text="${{employee.birthday}}">2017-12-12</td><!-- 使用spring自带的格式化工具 -->
+					<!-- <td th:text="${#dates.format(employee.birthday, 'yyyy-MM-dd')}">...</td> -->
+					<td th:text="${employee.department.name}">研发部</td>
+					<td th:text="${employee.address}">西安</td>
 					<td>
-						<a href="[[@{employee/edit}]]">修改</a>
-						<a href="[[@{employee/delete}]]" onclick="return confirmDelete('${employee.ename}')">删除</a>
+						<a th:href="@{/employee/toEdit(id=${employee.id})}" href="toEdit.html">修改</a>
+						<a th:href="@{/employee/delete(id=${employee.id})}" onclick="return confirmDelete('${employee.ename}')">删除</a>
 					</td>
 				</tr>
 			</table>

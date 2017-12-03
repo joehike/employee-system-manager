@@ -18,8 +18,8 @@ function confirmDelete(ename) {
 <!-- 导航 -->
 <nav>
 	<ul th:>
-		<li><a href="/IndexServlet">员工信息</a></li>
-		<li><a href="/IndexServlet?method=toAdd">添加员工</a></li>
+		<li><a th:href="@{/employee/list}">员工信息</a></li>
+		<li><a th:href="@{/employee/toAdd}">添加员工</a></li>
 	</ul>
 	<ul class="login">
 		<!-- <c:choose>

@@ -1,28 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="common/layout">
 <head>
 <meta charset="UTF-8">
-<title>员工管理系统|修改用户信息</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
+<title>员工管理系统|修改</title>
 </head>
 <body>
 
-<!-- 导入导航页 -->
-<%@ include file="common/nav.jspf" %>
-
-<div class="edit">
+<div layout:fragment="content" class="add">
 	<h4>用户信息</h4>
 	<form action="${basePath}/IndexServlet" method="post">
-		<input type="hidden" name="method" value="edit">
-		<div>
-			<label for="eid">编号：</label>
-			<input type="text" name="eid" disabled="disabled" value="${requestScope.eid}"/>
-			<input type="hidden" name="eid" value="${requestScope.eid}">
-			<span class="error">${requestScope.eidError}</span>
-		</div>
+		<input type="hidden" name="method" value="add">
 		<div>
 			<label for="ename">姓名：</label>
 			<input type="text" name="ename" value="${requestScope.ename}" />
@@ -49,14 +38,11 @@
 			<span class="error">${requestScope.esalaryError}</span>
 		</div>
 		<div>
-			<button type="submit">修改</button>
+			<button type="submit">添加</button>
 			<button type="reset">重置</button>
 		</div>
 	</form>
 </div>
-
-<!-- 导入页脚  -->
-<%@ include file="common/footer.jspf" %>
 
 </body>
 </html>
