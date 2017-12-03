@@ -22,14 +22,10 @@ function confirmDelete(ename) {
 		<li><a th:href="@{/employee/toAdd}">添加员工</a></li>
 	</ul>
 	<ul class="login">
-		<!-- <c:choose>
-			<c:when test="${!empty sessionScope.user}">
-				<li><a href="#">${sessionScope.user.ename}</a></li>						
-			</c:when>
-			<c:otherwise>
-				<li><a href="${basePath}/LoginServlet">登录</a></li>			
-			</c:otherwise>
-		</c:choose> -->
+		
+		<li><a href="#">${sessionScope.user.ename}</a></li>						
+		<li><a href="${basePath}/LoginServlet">登录</a></li>			
+		
 	</ul>
 </nav>
 <div class="clear"></div>
