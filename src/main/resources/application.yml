@@ -1,0 +1,23 @@
+server:
+  port: 80
+  
+---
+# 数据库信息
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/employee_manager_system
+    username: root
+    password: root
+---
+# 模板
+spring:
+  thymeleaf: 
+    mode: LEGACYHTML5
+    cache: false
+
+---
+mybatis:
+  type-aliases-package: com.joe.ems.domain
+  mapper-locations:
+    - classpath:com/joe/ems/mapper/*.xml

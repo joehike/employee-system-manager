@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="common/layout">
+<head>
+<meta charset="UTF-8">
+<title>员工管理系统|主页</title>
+</head>
+<body>
+<!-- 导入导航页 -->
+
+
+
+<div layout:fragment="content" class="content">
+	<article>
+		<header>
+		<h4 >员工信息</h4>
+		</header>
+		<div  class="table">
+			<table>
+				<tr>
+					<th>编号</th><th>姓名</th><th>生日</th><th>部门</th><th>地址</th><th>操作</th>
+				</tr>
+				<tr th:each="employee : ${employees}">
+					<td th:text="${employee.id}">...</td>
+					<td th:text="${employee.name}">...</td>
+					<td th:text="${employee.birthday}">...</td>
+					<td th:text="${employee.department.name}">...</td>
+					<td th:text="${employee.address}">...</td>
+					<td>
+						<a href="[[@{employee/edit}]]">修改</a>
+						<a href="[[@{employee/delete}]]" onclick="return confirmDelete('${employee.ename}')">删除</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	
+	</article>
+</div>
+
+</body>
+</html>

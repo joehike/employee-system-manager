@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joe.ems.dao.EmployeeMapper">
+   
+  <!-- 属性对应关系 -->
+  <resultMap id="employeeResult" type="Employee">
+    <id column="e_id" property="id" />
+    <result column="e_name" property="name" />
+    <result column="birthday" property="birthday" />
+    <result column="address" property="address" />
+    <!-- association 必须放最后 -->
+  	<association property="department" javaType="Department" >
+  		<id column="d_id" property="id"/>
+  		<result column="d_name" property="name"/>
+  	</association>
+  </resultMap>
+  
+  <!-- sql片段 -->
+  <sql id="employeeColumns">${alias}.id as e_id,${alias}.name e_name,birthday,address</sql>
+  <sql id="departmentColumns">${alias}.id as d_id,${alias}.name as d_name</sql>
+  
+  <!-- 根据id查询员工 -->
+  <select id="selectByPrimaryKey" resultMap="employeeResult">
+  	select 
+  		<include refid="employeeColumns"><property name="alias" value="e"/></include>,
+  		<include refid="departmentColumns"><property name="alias" value="d"/></include>
+  	from employee e
+  	left outer join department d on e.did = d.id
+  	where e.id = #{id}
+  </select>
+  
+  <!-- 查询所有 -->
+  <select id="select" resultMap="employeeResult">
+  	select 
+  		<include refid="employeeColumns"><property name="alias" value="e"/></include>,
+  		<include refid="departmentColumns"><property name="alias" value="d"/></include>
+	from employee e
+	left outer join department d on e.did = d.id
+  </select>
+  
+  <!-- 新怎员工 -->
+  <insert id="insert">
+  	insert into employee(name,birthday,address,did) values 
+  		(#{name},#{birthday},#{address},#{department.id});
+  </insert>
+  
+  <!-- 跟新信息 -->
+  <update id="updateByPrimaryKey" >
+  	update employee 
+  	set name = #{name}, birthday = #{birthday}, address = #{address}, did = #{department.id}
+  	where id = #{id}
+  </update>
+  
+  <!-- 根据id删除 -->
+  <delete id="deleteByPrimaryKey">
+  	delete from employee where id = #{id}
+  </delete>
+  
+</mapper>
