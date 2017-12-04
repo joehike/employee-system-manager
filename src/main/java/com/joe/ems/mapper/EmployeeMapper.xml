@@ -36,6 +36,7 @@
   		<include refid="departmentColumns"><property name="alias" value="d"/></include>
 	from employee e
 	left outer join department d on e.did = d.id
+	order by e.id
   </select>
   
   <!-- 新怎员工 -->
