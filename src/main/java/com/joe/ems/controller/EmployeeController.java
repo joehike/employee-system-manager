@@ -1,11 +1,15 @@
 package com.joe.ems.controller;
 
+import java.util.Iterator;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +42,7 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("add")
-	public String add(@ModelAttribute("employee")Employee employee,BindingResult result, Model model) {
+	public String add(@Valid @ModelAttribute("employee")Employee employee,BindingResult result, Model model) {
 		model.addAttribute("employee", employee);
 		if(result.hasErrors()) {
 			for (ObjectError error : result.getAllErrors()) {
@@ -66,9 +70,16 @@ public class EmployeeController {
 	 * @return
 	 */
 	@RequestMapping("edit")
-	public String edit(@ModelAttribute("employee")Employee employee) {
-		employeeMapper.updateByPrimaryKey(employee);
-		return "redirect:/employee/list";
+	public String edit(@Valid Employee employee, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("employee", employee);
+			List<Department> departments = departmentMapper.select();
+			model.addAttribute("departments", departments);
+			return "/employee/toEdit";
+		} else {
+			employeeMapper.updateByPrimaryKey(employee);
+			return "redirect:/employee/list";			
+		}
 	}
 	
 }
