@@ -10,35 +10,31 @@
 
 <div layout:fragment="content" class="add">
 	<h4>用户信息</h4>
-	<form action="${basePath}/IndexServlet" method="post">
-		<input type="hidden" name="method" value="add">
+	<form th:action="@{/employee/add}" method="post">
 		<div>
-			<label for="ename">姓名：</label>
-			<input type="text" name="ename" value="${requestScope.ename}" />
-			<span class="error">${requestScope.enameError}</span>
+			<label for="name">姓名：</label>
+			<input type="text" name="name" th:value="*{name}" />
+			<span class="error"><!-- ${requestScope.enameError} --></span>
 		</div>
 		<div>
-			<label for="egender">性别：</label>
-			男<input type="radio" name="egender"  value="男" ${requestScope.egender == '男' ? 'checked' : ''}/>
-			女<input type="radio" name="egender"  value="女" ${requestScope.egender == '女' ? 'checked' : ''}/>
-			<span class="error">${requestScope.egenderError}</span>
+			<label for="birthday">生日：</label>
+			<input type="date" name="birthday" th:value="*{{birthday}}">
+			<span class="error"><!-- ${requestScope.egenderError} --></span>
 		</div>
 		<div>
 			<label for="did">部门：</label>
-			<select name="did">
-				<c:forEach items="${requestScope.departments}" var="department">
-					<option ${department.did==did?'selected':''} value="${department.did}">${department.dname}</option>
-				</c:forEach>
+			<select name="department.id">
+				<option th:each="department : ${departments}" th:value="${department.id}" value="1" th:text="${department.name}">研发部</option>
 			</select>
-			<span class="error">${requestScope.didError}</span>
+			<span class="error"><!-- ${requestScope.didError} --></span>
 		</div>
 		<div>
-			<label for="esalary">工资：</label>
-			<input type="text" name="esalary" value="${requestScope.esalary}"/>
-			<span class="error">${requestScope.esalaryError}</span>
+			<label for="address">工资：</label>
+			<input type="text" name="address" th:value="*{address}"/>
+			<span class="error"><!-- ${requestScope.esalaryError} --></span>
 		</div>
 		<div>
-			<button type="submit">添加</button>
+			<button type="submit">修改</button>
 			<button type="reset">重置</button>
 		</div>
 	</form>

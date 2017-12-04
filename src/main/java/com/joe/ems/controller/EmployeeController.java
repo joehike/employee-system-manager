@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,7 +32,24 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("toAdd")
-	public void toAdd() {
+	public void toAdd(Model model) {
+		List<Department> departments = departmentMapper.select();
+		model.addAttribute("departments", departments);
+	}
+	
+	@RequestMapping("add")
+	public String add(@ModelAttribute("employee")Employee employee,BindingResult result, Model model) {
+		model.addAttribute("employee", employee);
+		if(result.hasErrors()) {
+			for (ObjectError error : result.getAllErrors()) {
+				System.out.println(error.getObjectName()+":"+error.getDefaultMessage());
+			}
+			return "add";
+		} else {
+			return "redirect:/employee/list";			
+		}
+		
+		
 	}
 	
 	@RequestMapping("toEdit")
@@ -38,6 +58,17 @@ public class EmployeeController {
 		model.addAttribute("employee", employee);
 		List<Department> departments = departmentMapper.select();
 		model.addAttribute("departments", departments);
+	}
+	
+	/**
+	 * 获得数据对象 使用 @ModelAttribute注解
+	 * @param employee
+	 * @return
+	 */
+	@RequestMapping("edit")
+	public String edit(@ModelAttribute("employee")Employee employee) {
+		employeeMapper.updateByPrimaryKey(employee);
+		return "redirect:/employee/list";
 	}
 	
 }

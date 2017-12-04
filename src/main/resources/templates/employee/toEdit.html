@@ -10,10 +10,11 @@
 
 <div layout:fragment="content" class="edit">
 	<h4>用户信息</h4>
-	<form th:action="@{employee/edit}" method="post">
+	<form th:action="@{/employee/edit}" method="post">
 		<div>
 			<label for="id">编号：</label>
 			<input type="text" name="id" disabled="disabled" th:value="${employee.id}"/>
+			<input type="hidden" name="id" th:value="${employee.id}"/>
 		</div>
 		<div>
 			<label for="name">姓名：</label>
@@ -27,7 +28,7 @@
 		</div>
 		<div>
 			<label for="did">部门：</label>
-			<select name="did">
+			<select name="department.id">
 				<option th:each="department : ${departments}" th:selected="${employee.department.id==department.id}" th:value="${department.id}" value="1" th:text="${department.name}">研发部</option>
 			</select>
 			<span class="error"><!-- ${requestScope.didError} --></span>

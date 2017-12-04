@@ -3,11 +3,14 @@ package com.joe.ems.domain;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Alias("Employee")
 public class Employee {
+	
 	private Integer id;
 
+	@NotEmpty(message="用户名不能为空")
 	private String name;
 
 	private Date birthday;
