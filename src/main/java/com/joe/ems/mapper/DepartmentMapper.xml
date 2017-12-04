@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joe.ems.dao.DepartmentMapper">
+  <resultMap id="departmentResult" type="Department">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <!-- 通过id查询 -->
+  <select id="selectByPrimaryKey" parameterType="_int" resultMap="departmentResult">
+  	select id, name from department where id = #{id}
+  </select>
+  
+  <!-- 查询所有 -->
+  <select id="select" resultMap="departmentResult">
+  	select id, name from department
+  </select>
+  
+  <!-- 根据id删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="_int">
+  	delete from department where id = #{id}
+  </delete>
+  
+  <!-- 添加 -->
+  <insert id="insert" parameterType="Department">
+  	insert into department(id, name) values (#{id}, #{name}) 
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="Department" >
+  	update department set name = #{name} where id = #{id}
+  </update>
+  
+</mapper>

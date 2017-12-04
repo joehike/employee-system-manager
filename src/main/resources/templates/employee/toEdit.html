@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="common/layout">
+<head>
+<meta charset="UTF-8">
+<title>员工管理系统|修改</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="edit">
+	<h4>用户信息</h4>
+	<form th:action="@{employee/edit}" method="post">
+		<div>
+			<label for="id">编号：</label>
+			<input type="text" name="id" disabled="disabled" th:value="${employee.id}"/>
+		</div>
+		<div>
+			<label for="name">姓名：</label>
+			<input type="text" name="name" th:value="${employee.name}" />
+			<span class="error"><!-- ${requestScope.enameError} --></span>
+		</div>
+		<div>
+			<label for="birthday">生日：</label>
+			<input type="date" name="birthday" th:value="${{employee.birthday}}">
+			<span class="error"><!-- ${requestScope.egenderError} --></span>
+		</div>
+		<div>
+			<label for="did">部门：</label>
+			<select name="did">
+				<option th:each="department : ${departments}" th:selected="${employee.department.id==department.id}" th:value="${department.id}" value="1" th:text="${department.name}">研发部</option>
+			</select>
+			<span class="error"><!-- ${requestScope.didError} --></span>
+		</div>
+		<div>
+			<label for="address">工资：</label>
+			<input type="text" name="address" th:value="${employee.address}"/>
+			<span class="error"><!-- ${requestScope.esalaryError} --></span>
+		</div>
+		<div>
+			<button type="submit">修改</button>
+			<button type="reset">重置</button>
+		</div>
+	</form>
+</div>
+
+</body>
+</html>

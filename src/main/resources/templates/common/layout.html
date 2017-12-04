@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title >员工管理系统</title>
+<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css">
+<script type="text/javascript">
+/* 确认删除 */
+function confirmDelete(ename) {
+	var flag = confirm('确认删除 ['+ename+'] 吗？');
+	return flag;
+}
+</script>
+
+</head>
+<body>
+<!-- 导航 -->
+<nav>
+	<ul th:>
+		<li><a th:href="@{/employee/list}">员工信息</a></li>
+		<li><a th:href="@{/employee/toAdd}">添加员工</a></li>
+	</ul>
+	<ul class="login">
+		
+		<li><a href="#">${sessionScope.user.ename}</a></li>						
+		<li><a href="${basePath}/LoginServlet">登录</a></li>			
+		
+	</ul>
+</nav>
+<div class="clear"></div>
+
+<div layout:fragment="content"></div>
+
+<!-- 页脚 -->
+<footer>
+	Copyright &copy; 2017 西安尚学堂 员工管理系统
+</footer>
+
+</body>
+</html>

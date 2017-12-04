@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="common/layout">
+<head>
+<meta charset="UTF-8">
+<title>员工管理系统|主页</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="content">
+	<article>
+		<header>
+		<h4 >员工信息</h4>
+		</header>
+		<div  class="table">
+			<table>
+				<tr>
+					<th>编号</th><th>姓名</th><th>生日</th><th>部门</th><th>地址</th><th>操作</th>
+				</tr>
+				<tr th:each="employee : ${employees}">
+					<td th:text="${employee.id}">1</td>
+					<td th:text="${employee.name}">张三</td>
+					<!-- 日期格式化 -->
+					<td th:text="${{employee.birthday}}">2017-12-12</td><!-- 使用spring自带的格式化工具 -->
+					<!-- <td th:text="${#dates.format(employee.birthday, 'yyyy-MM-dd')}">...</td> -->
+					<td th:text="${employee.department.name}">研发部</td>
+					<td th:text="${employee.address}">西安</td>
+					<td>
+						<a th:href="@{/employee/toEdit(id=${employee.id})}" href="toEdit.html">修改</a>
+						<a th:href="@{/employee/delete(id=${employee.id})}" onclick="return confirmDelete('${employee.ename}')">删除</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	
+	</article>
+</div>
+
+</body>
+</html>
