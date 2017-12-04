@@ -2,9 +2,13 @@ package com.joe.ems.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -38,6 +42,17 @@ public class EmployeeController {
 		model.addAttribute("employee", employee);
 		List<Department> departments = departmentMapper.select();
 		model.addAttribute("departments", departments);
+	}
+	
+	/**
+	 * 获得数据对象 使用 @ModelAttribute注解
+	 * @param employee
+	 * @return
+	 */
+	@RequestMapping("edit")
+	public String edit(@ModelAttribute("employee")Employee employee) {
+		employeeMapper.updateByPrimaryKey(employee);
+		return "redirect:/employee/list";
 	}
 	
 }
