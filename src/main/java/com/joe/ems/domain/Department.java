@@ -1,10 +1,13 @@
 package com.joe.ems.domain;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.ibatis.type.Alias;
 
 @Alias("Department")
 public class Department {
-    private Integer id;
+	@NotNull
+    private Integer id = 1;
 
     private String name;
 

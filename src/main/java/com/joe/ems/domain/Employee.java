@@ -2,8 +2,11 @@ package com.joe.ems.domain;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Alias("Employee")
 public class Employee {
@@ -13,9 +16,11 @@ public class Employee {
 	@NotEmpty(message="用户名不能为空")
 	private String name;
 	
+	@NotNull(message="不能为空值")
+	@DateTimeFormat
 	private Date birthday;
 
-	private Department department;
+	private Department department = new Department();
 
 	private String address;
 

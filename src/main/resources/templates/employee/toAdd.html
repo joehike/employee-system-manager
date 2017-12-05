@@ -8,33 +8,32 @@
 </head>
 <body>
 
-<div layout:fragment="content" class="add">
+<div layout:fragment="content" class="edit">
 	<h4>用户信息</h4>
-	<form th:action="@{/employee/add}" method="post">
+	<form th:action="@{/employee/add}" method="post" th:object="${employee}">
 		<div>
 			<label for="name">姓名：</label>
 			<input type="text" name="name" th:value="*{name}" />
-			<p class="error" th:if="${#fields.hasErrors('name')}" th:errors="${name}">用户名错误</p>
+			<span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">用户名错误</span>
 		</div>
 		<div>
 			<label for="birthday">生日：</label>
 			<input type="date" name="birthday" th:value="*{{birthday}}">
-			<span class="error"><!-- ${requestScope.egenderError} --></span>
+			<span class="error" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">生日错误</span>
 		</div>
-		<div>
+		<!-- <div>
 			<label for="did">部门：</label>
 			<select name="department.id">
-				<option th:each="department : ${departments}" th:value="${department.id}" value="1" th:text="${department.name}">研发部</option>
+				<option th:each="department : ${departments}" th:selected="${employee.department.id==department.id}" th:value="${department.id}" value="1" th:text="${department.name}">研发部</option>
 			</select>
-			<span class="error"><!-- ${requestScope.didError} --></span>
-		</div>
+			<span class="error" th:if="${#fields.hasErrors('department.id')}" th:errors="*{department.id}">部门错误</span>
+		</div> -->
 		<div>
-			<label for="address">工资：</label>
+			<label for="address">地址：</label>
 			<input type="text" name="address" th:value="*{address}"/>
-			<span class="error"><!-- ${requestScope.esalaryError} --></span>
 		</div>
 		<div>
-			<button type="submit">修改</button>
+			<button type="submit">添加</button>
 			<button type="reset">重置</button>
 		</div>
 	</form>

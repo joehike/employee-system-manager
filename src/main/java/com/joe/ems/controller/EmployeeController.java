@@ -1,6 +1,5 @@
 package com.joe.ems.controller;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +35,8 @@ public class EmployeeController {
 	
 	@RequestMapping("toAdd")
 	public void toAdd(Model model) {
+		model.addAttribute("employee", new Employee());
+		
 		List<Department> departments = departmentMapper.select();
 		model.addAttribute("departments", departments);
 	}
@@ -45,11 +45,12 @@ public class EmployeeController {
 	public String add(@Valid @ModelAttribute("employee")Employee employee,BindingResult result, Model model) {
 		model.addAttribute("employee", employee);
 		if(result.hasErrors()) {
-			for (ObjectError error : result.getAllErrors()) {
-				System.out.println(error.getObjectName()+":"+error.getDefaultMessage());
-			}
-			return "add";
+			List<Department> departments = departmentMapper.select();
+			model.addAttribute("departments", departments);
+			return "/employee/toAdd";
 		} else {
+			System.out.println(employee);
+			employeeMapper.insert(employee);
 			return "redirect:/employee/list";			
 		}
 		
