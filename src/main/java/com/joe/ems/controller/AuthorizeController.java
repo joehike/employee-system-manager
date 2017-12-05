@@ -14,7 +14,7 @@ import com.joe.ems.domain.Department;
 import com.joe.ems.domain.Employee;
 
 @Controller
-public class HomeController {
+public class AuthorizeController {
 
 	@Autowired
 	private DepartmentMapper departmentMapper;

@@ -39,4 +39,11 @@ public interface EmployeeMapper {
      * @return
      */
     int updateByPrimaryKey(Employee record);
+    
+    /**
+     * 是否存在当前id
+     * @param id
+     * @return
+     */
+    int exist(Integer id);
 }

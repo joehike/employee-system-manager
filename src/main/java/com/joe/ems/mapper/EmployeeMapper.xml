@@ -57,4 +57,8 @@
   	delete from employee where id = #{id}
   </delete>
   
+  <select id="exist" resultType="_int">
+  	select count(*) from employee where id = #{id}
+  </select>
+  
 </mapper>

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,6 +80,20 @@ public class EmployeeController {
 			employeeMapper.updateByPrimaryKey(employee);
 			return "redirect:/employee/list";			
 		}
+	}
+	
+	/**
+	 * 删除数据
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("delete")
+	public String delete(@RequestParam("id") Integer id) {
+		// 查看是否存单当前id
+		if(employeeMapper.exist(id) > 0) {
+			employeeMapper.deleteByPrimaryKey(id);
+		}		
+		return "redirect:/employee/list";
 	}
 	
 }
