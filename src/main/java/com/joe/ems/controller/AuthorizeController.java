@@ -1,12 +1,8 @@
 package com.joe.ems.controller;
 
-import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.joe.ems.dao.DepartmentMapper;
 import com.joe.ems.dao.EmployeeMapper;
-import com.joe.ems.domain.Department;
 import com.joe.ems.domain.Employee;
 import com.joe.ems.vo.UserVo;
 
@@ -38,9 +31,6 @@ public class AuthorizeController {
 	public String login(@Valid UserVo user, BindingResult result, HttpSession httpSession, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("userVo", user);
-			for (FieldError error: result.getFieldErrors()) {
-				System.err.println(error);
-			}
 			return "login";
 		}
 
@@ -53,8 +43,6 @@ public class AuthorizeController {
 		// 全局错误 使用 global获得
 		result.reject("登录失败", "用户名或密码错误");
 		//result.rejectValue("message", "登录失败", "用户名或密码错误");
-
-		System.out.println(result.getAllErrors());
 		
 		return "login";
 
