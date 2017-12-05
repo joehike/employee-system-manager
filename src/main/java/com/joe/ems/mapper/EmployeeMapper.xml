@@ -6,6 +6,7 @@
   <resultMap id="employeeResult" type="Employee">
     <id column="e_id" property="id" />
     <result column="e_name" property="name" />
+    <result column="password" property="password" />
     <result column="birthday" property="birthday" />
     <result column="address" property="address" />
     <!-- association 必须放最后 -->
@@ -16,7 +17,7 @@
   </resultMap>
   
   <!-- sql片段 -->
-  <sql id="employeeColumns">${alias}.id as e_id,${alias}.name e_name,birthday,address</sql>
+  <sql id="employeeColumns">${alias}.id as e_id,${alias}.name e_name,password,birthday,address</sql>
   <sql id="departmentColumns">${alias}.id as d_id,${alias}.name as d_name</sql>
   
   <!-- 根据id查询员工 -->
@@ -41,14 +42,14 @@
   
   <!-- 新怎员工 -->
   <insert id="insert">
-  	insert into employee(name,birthday,address,did) values 
-  		(#{name},#{birthday},#{address},#{department.id});
+  	insert into employee(name,password,birthday,address,did) values 
+  		(#{name},#{password},#{birthday},#{address},#{department.id});
   </insert>
   
   <!-- 跟新信息 -->
   <update id="updateByPrimaryKey" >
   	update employee 
-  	set name = #{name}, birthday = #{birthday}, address = #{address}, did = #{department.id}
+  	set name = #{name}, #{password}, birthday = #{birthday}, address = #{address}, did = #{department.id}
   	where id = #{id}
   </update>
   
@@ -61,4 +62,12 @@
   	select count(*) from employee where id = #{id}
   </select>
   
+   <select id="login"  resultMap="employeeResult">
+  	select 
+  		<include refid="employeeColumns"><property name="alias" value="e"/></include>,
+  		<include refid="departmentColumns"><property name="alias" value="d"/></include>
+  	from employee e
+  	left outer join department d on e.did = d.id
+  	where e.name = #{name} and password = #{password}
+  </select>
 </mapper>

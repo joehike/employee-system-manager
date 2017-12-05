@@ -3,80 +3,61 @@ package com.joe.ems.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.joe.ems.dao.DepartmentMapper;
 import com.joe.ems.dao.EmployeeMapper;
 import com.joe.ems.domain.Department;
 import com.joe.ems.domain.Employee;
+import com.joe.ems.vo.UserVo;
 
 @Controller
 public class AuthorizeController {
 
 	@Autowired
-	private DepartmentMapper departmentMapper;
-	@Autowired
-	private EmployeeMapper employeeMapper;
-
-	@RequestMapping({ "/", "index" })
-	public String home(Model model) {
-
-		return "index";
-	}
-
-	@RequestMapping("department")
-	public String department(Model model) {
-		// 测试部门dao层
-		Department department = departmentMapper.selectByPrimaryKey(1);
-		model.addAttribute("department", department);
-		// 添加部门
-		Department d = new Department();
-		d.setId(6);
-		d.setName("测试部");
-		departmentMapper.insert(d);
-
-		List<Department> departments = departmentMapper.select();
-		model.addAttribute("departments", departments);
-
-		d = departmentMapper.selectByPrimaryKey(6);
-		d.setName("测试修改");
-		departmentMapper.updateByPrimaryKey(d);
-
-		// 删除
-		// System.out.println(departmentMapper.deleteByPrimaryKey(6));
-		return "index";
-	}
+	private EmployeeMapper mapper;
 	
-	@RequestMapping("employee")
-	public void employee() {
-		Employee employee = employeeMapper.selectByPrimaryKey(1);
-		System.err.println(employee);
-		
-		employee = new Employee();
-		employee.setName("张测试");
-		employee.setBirthday(new Date());
-		employee.setDepartment(departmentMapper.selectByPrimaryKey(5));
-		employee.setAddress("国宾");
-		employeeMapper.insert(employee);
-		
-		
-		employee = employeeMapper.selectByPrimaryKey(5);
-		employee.setName("李测试");
-		employeeMapper.updateByPrimaryKey(employee);
-		
-		
-		List<Employee> employees = employeeMapper.select();
-		for (Employee e : employees) {
-			System.err.println(e);
+	@RequestMapping( path="/login", method=RequestMethod.GET)
+	public String toLogin(Model model) {
+		model.addAttribute("userVo", new UserVo());
+		return "login";
+	}
+
+	@RequestMapping(path="/login", method=RequestMethod.POST)
+	public String login(@Valid UserVo user, BindingResult result, HttpSession httpSession, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("userVo", user);
+			for (FieldError error: result.getFieldErrors()) {
+				System.err.println(error);
+			}
+			return "login";
 		}
+
+		Employee employee = mapper.login(user.getUsername(), user.getPassword());
+		if (employee != null) {
+			httpSession.setAttribute("employee", employee);
+			return "redirect:/employee/list";
+		}
+		model.addAttribute("userVo", user);
+		// 全局错误 使用 global获得
+		result.reject("登录失败", "用户名或密码错误");
+		//result.rejectValue("message", "登录失败", "用户名或密码错误");
+
+		System.out.println(result.getAllErrors());
 		
-		System.err.println(employeeMapper.deleteByPrimaryKey(6));
-		
-		
-		
+		return "login";
+
 	}
 
 }

@@ -16,6 +16,8 @@ public class Employee {
 	@NotEmpty(message="用户名不能为空")
 	private String name;
 	
+	private String password;
+	
 	@NotNull(message="不能为空值")
 	@DateTimeFormat
 	private Date birthday;
@@ -38,6 +40,14 @@ public class Employee {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Date getBirthday() {
@@ -66,7 +76,9 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", birthday=" + String.format("%tF", birthday) + ", department=" + department
-				+ ", address=" + address + "]";
+		return "Employee [id=" + id + ", name=" + name + ", password=" + password + ", birthday=" + birthday
+				+ ", department=" + department + ", address=" + address + "]";
 	}
+
+	
 }
