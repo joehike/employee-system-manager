@@ -23,8 +23,8 @@ function confirmDelete(ename) {
 	</ul>
 	<ul class="login">
 		
-		<li><a href="#">${sessionScope.user.ename}</a></li>						
-		<li><a href="${basePath}/LoginServlet">登录</a></li>			
+		<li><a href="#" th:if="${session.employee!=null}" th:text="${session.employee.name}">用户名</a></li>						
+		<li><a href="@{/login}" th:if="${session.employee==null}">登录</a></li>			
 		
 	</ul>
 </nav>

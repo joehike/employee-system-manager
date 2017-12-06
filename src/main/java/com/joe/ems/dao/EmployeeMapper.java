@@ -2,6 +2,8 @@ package com.joe.ems.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.joe.ems.domain.Employee;
 
 public interface EmployeeMapper {
@@ -39,4 +41,19 @@ public interface EmployeeMapper {
      * @return
      */
     int updateByPrimaryKey(Employee record);
+    
+    /**
+     * 是否存在当前id
+     * @param id
+     * @return
+     */
+    int exist(Integer id);
+
+    /**
+     * 用戶登录
+     * @param username
+     * @param password
+     * @return
+     */
+	Employee login(@Param("name")String name, @Param("password")String password);
 }

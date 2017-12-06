@@ -1,34 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="common/layout">
 <head>
 <meta charset="UTF-8">
 <title>员工管理系统|登录</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 </head>
 <body>
 
-<!-- 导入导航页 -->
-<%@ include file="common/nav.jspf" %>
+<div layout:fragment="content" class="content">
+<form th:action="@{/login}" method="post" th:object="${userVo}">
+<div>
+	<label for="usrname">用户名：</label>
+	<input type="text" name="username" th:value="*{username}" placeholder="请输入用户名">
+	<span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">用户名错误</span>
+</div>
+<div>
+	<label for="password">密码：</label>
+	<input type="password" name="password" th:value="*{password}" placeholder="请输入密码">
+	<span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">密码错误</span>
+</div>
+<div>
+<!-- <p class="error fieldError" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">密码错误</p> -->
+<p class="error" th:if="${#fields.hasErrors('global')}" th:errors="*{global}">密码错误</p>
+</div> 
 
-<form action="${basePath}/LoginServlet?method=signin" method="post">
-<div>
-	<label for="ename">用户名：</label>
-	<input type="text" name="ename" placeholder="请输入用户名">
-</div>
-<div>
-	<label for="epassword">密码：</label>
-	<input type="password" name="epassword" placeholder="请输入密码">
-</div>
 <div>
 	<button type="submit">登录</button>
 </div>
 <div>
 </div>
 </form>
-<!-- 导入页脚  -->
-<%@ include file="common/footer.jspf" %>
+</div>
 </body>
 </html>
