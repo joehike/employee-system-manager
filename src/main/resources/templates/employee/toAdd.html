@@ -21,13 +21,13 @@
 			<input type="date" name="birthday" th:value="*{{birthday}}">
 			<span class="error" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">生日错误</span>
 		</div>
-		<!-- <div>
+		<div>
 			<label for="did">部门：</label>
 			<select name="department.id">
 				<option th:each="department : ${departments}" th:selected="${employee.department.id==department.id}" th:value="${department.id}" value="1" th:text="${department.name}">研发部</option>
 			</select>
 			<span class="error" th:if="${#fields.hasErrors('department.id')}" th:errors="*{department.id}">部门错误</span>
-		</div> -->
+		</div>
 		<div>
 			<label for="address">地址：</label>
 			<input type="text" name="address" th:value="*{address}"/>

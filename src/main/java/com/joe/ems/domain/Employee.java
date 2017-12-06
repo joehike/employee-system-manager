@@ -17,7 +17,6 @@ public class Employee {
 	private String name;
 	
 	@NotNull(message="不能为空值")
-	@DateTimeFormat
 	private Date birthday;
 
 	private Department department = new Department();
